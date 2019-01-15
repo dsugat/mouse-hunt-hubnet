@@ -62,7 +62,7 @@ to setup
   set leader-caught 0
 
   set light-fur-color 38
-  set dark-fur-color 31
+  set dark-fur-color 32
   ask patches [set pcolor 35]
 
   setup-mice-population
@@ -114,12 +114,12 @@ to setup-mice-population
   ask mice [
     setxy random-xcor random-ycor
     set partner nobody
-    set size 2
+    set size 3
     set shape "mouse"
     set generation 0
   ]
   ask mice with [sex = "male"] [
-    set size 2.5
+    set size 3.5
   ]
 end
 
@@ -127,9 +127,8 @@ to go
   move-mice
   reproduce-mice
   listen-clients
-  every 0.01
+  every 0.1
   [ tick ]
-  do-plots
 
   tick
 end
@@ -169,7 +168,7 @@ to set-fur-color
 end
 to wander ;; mice procedure
    rt random 360
-   fd random-float 2
+   fd random-float 0.5
 end
 
 
@@ -201,8 +200,9 @@ to set-dark-background
 end
 
 to set-mixed-background
-  ask patches [set pcolor 36]
+  ask patches [set pcolor 35]
   ask n-of (round ( count patches / 1.5)) patches [ if pxcor > 0  [ set pcolor 30 ]]
+  ask n-of (round ( count patches / 1.5)) patches [ if pxcor < 0  [ set pcolor 40 ]]
   repeat 50 [diffuse pcolor 0.1]
 end
 
@@ -332,18 +332,9 @@ to update-leader-stats
   ]
 end
 
-;;;;;;;;;;;;;;;;;;;;;
-;; Plotting Procedure
-;;;;;;;;;;;;;;;;;;;;;
-
-to do-plots
-  set-current-plot "Mice Caught by All Hunters vs. Time"
-  plot total-caught
-end
 
 
-; Copyright 2006 Uri Wilensky.
-; See Info tab for full copyright and license.
+
 @#$#@#$#@
 GRAPHICS-WINDOW
 492
@@ -359,7 +350,7 @@ GRAPHICS-WINDOW
 1
 1
 0
-1
+0
 1
 1
 -32
@@ -397,8 +388,8 @@ SLIDER
 initial-homozygous-dominant-males
 initial-homozygous-dominant-males
 0
-1000
-36.0
+50
+15.0
 1
 1
 NIL
@@ -429,8 +420,8 @@ SLIDER
 initial-homozygous-dominant-females
 initial-homozygous-dominant-females
 0
-1000
-22.0
+50
+15.0
 1
 1
 NIL
@@ -444,8 +435,8 @@ SLIDER
 initial-heterozygous-males
 initial-heterozygous-males
 0
-1000
-50.0
+50
+20.0
 1
 1
 NIL
@@ -459,8 +450,8 @@ SLIDER
 initial-heterozygous-females
 initial-heterozygous-females
 0
-1000
-52.0
+50
+30.0
 1
 1
 NIL
@@ -474,8 +465,8 @@ SLIDER
 initial-homozygous-recessive-males
 initial-homozygous-recessive-males
 0
-1000
-32.0
+50
+10.0
 1
 1
 NIL
@@ -489,8 +480,8 @@ SLIDER
 initial-homozygous-recessive-females
 initial-homozygous-recessive-females
 0
-1000
-30.0
+50
+15.0
 1
 1
 NIL
@@ -629,18 +620,19 @@ PLOT
 293
 489
 540
-Mice Caught By All Hunters vs. Time
+Phenotype Frequencies
 NIL
-NIL
+frequencies
 0.0
 10.0
 0.0
-10.0
+1.0
 true
 false
 "" ""
 PENS
-"default" 1.0 0 -16777216 true "" "plot count mice"
+"dark-mice" 1.0 0 -12440034 true "" "if count mice > 0 [\nplot (count mice with [genotype = \"AA\"] +\ncount mice with [genotype = \"Aa\"]+\ncount mice with [genotype = \"aA\"]) /\ncount mice \n]"
+"light-mice" 1.0 0 -2570826 true "" "if count mice > 0 [\nplot (count mice with [genotype = \"aa\"]) / count mice \n]"
 
 MONITOR
 33
@@ -665,39 +657,6 @@ leader-caught
 11
 
 @#$#@#$#@
-## WHAT IS IT
-
-
-
-## HOW IT WORKS
-
-
-
-## HOW TO USE IT
-
-
-
-## THINGS TO NOTICE
-
-
-## THINGS TO TRY
-
-
-## EXTENDING THE MODEL
-
-
-
-## RELATED MODELS
-
-
-
-## CREDITS AND REFERENCES
-https://www.pnas.org/content/100/9/5268
-https://www.hhmi.org/biointeractive/making-fittest-natural-selection-and-adaptation
-
-
-
-## COPYRIGHT AND LICENSE
 @#$#@#$#@
 default
 true
