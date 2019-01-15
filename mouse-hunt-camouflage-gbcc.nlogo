@@ -35,10 +35,10 @@ mice-own [
 ;; Setup Procedures
 ;;;;;;;;;;;;;;;;;;;
 
-to startup
-  hubnet-reset
-  setup-clear
-end
+;to startup
+;  hubnet-reset
+;  setup-clear
+;end
 
 ;; this kills off all the turtles (including the players)
 ;; so we don't necessarily want to do this each time we setup
@@ -640,7 +640,7 @@ true
 false
 "" ""
 PENS
-"default" 1.0 0 -16777216 true "" "plot count turtles"
+"default" 1.0 0 -16777216 true "" "plot count mice"
 
 MONITOR
 33
